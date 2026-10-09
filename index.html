@@ -914,13 +914,13 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       </div>
       <div class="objetivos">
         <h3>Objetivo general</h3>
-        <p>Desarrollar una plataforma web que centralice la información de los hogares de niños de Santa Cruz de la Sierra que reciben donaciones, para conectarlos directamente con la ciudadanía y fortalecer la economía circular.</p>
+        <p>Desarrollar una plataforma web que centralice la información de los hogares de niños y fundaciones de Santa Cruz de la Sierra que reciben donaciones, para conectarlos directamente con la ciudadanía y fortalecer la economía circular.</p>
         <h3>Objetivos específicos</h3>
         <ol>
-          <li>Identificar y verificar hogares de niños en las distintas zonas de la ciudad.</li>
+          <li>Identificar y verificar hogares de niños y fundaciones en las distintas zonas de la ciudad.</li>
           <li>Diseñar una base de datos para registrar y actualizar sus necesidades.</li>
           <li>Construir una página web con mapa, filtros y semáforo de urgencia.</li>
-          <li>Conectar a donantes y hogares de forma directa, sin intermediarios.</li>
+          <li>Conectar a donantes con hogares y fundaciones de forma directa, sin intermediarios.</li>
         </ol>
       </div>
     </div>
@@ -973,7 +973,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <!-- SECCIÓN 5: PARA HOGARES -->
 <section class="homes" id="hogares">
   <div class="wrap">
-    <div class="eyebrow">Para hogares de niños</div>
+    <div class="eyebrow">Para hogares de niños y fundaciones</div>
     <h2>¿Diriges un hogar? Súmalo a Cruz Solidaria. Es gratis.</h2>
     <p class="intro">Aparece en el mapa, cuenta qué necesitan este mes y recibe las donaciones directo, coordinando por WhatsApp. Nosotros no recibimos ni transportamos donaciones.</p>
     <div class="homes-grid">
@@ -1051,10 +1051,10 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <h3 id="iT">Inscribir mi hogar</h3>
   <p class="sub">Tu hogar queda como <b>Pendiente</b> hasta que lo verifiquemos. Solo los hogares aprobados aparecen en el mapa.</p>
   <form id="fInscribir">
-    <label class="f">Nombre del hogar<input type="text" id="iNom" required></label>
+    <label class="f">Nombre del hogar o fundación<input type="text" id="iNom" required></label>
     <label class="f">Zona<select id="iZona" required><option>Norte</option><option>Sur</option><option>Centro</option><option>Este</option><option>Oeste</option></select></label>
     <label class="f">Dirección exacta<input type="text" id="iDir" required></label>
-    <label class="f">Enlace de Google Maps<input type="url" id="iMaps" placeholder="https://maps.app.goo.gl/..."></label>
+    <label class="f">Enlace de Google Maps<input type="text" inputmode="url" id="iMaps" placeholder="https://maps.app.goo.gl/..."></label>
     <label class="f">WhatsApp del hogar<input type="tel" id="iWa" required placeholder="7XXXXXXX"></label>
     <label class="f">Nombre y cargo del responsable<input type="text" id="iResp" required placeholder="Ej: María Pérez, directora"></label>
     <div class="f" style="font-weight:700;font-size:14px">¿Qué tan urgente es la necesidad del hogar este mes?
@@ -1096,7 +1096,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.min.js"></script>
 <script>
 /* ===== 1. DATOS: cada objeto es una fila de la base de datos (ejemplos) ===== */
-const CATS = ["Alimentos","Higiene","Pañales","Ropa","Útiles escolares","Juguetes","Muebles"];
+const CATS = ["Alimentos","Higiene","Pañales","Ropa","Útiles escolares","Juguetes","Muebles","Electrodomésticos"];
 const DIA = 864e5, hoy = Date.now();
 const hace = d => new Date(hoy - d*DIA);
 /* Los hogares y patrocinadores ahora vienen de la hoja de Google (Apps Script).
@@ -1143,10 +1143,9 @@ function iniciarMapa(){
   let cargo = false;
   const tiles = L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {maxZoom:18, attribution:"© OpenStreetMap"});
   tiles.on("tileload", () => { cargo = true; });
-  tiles.on("tileerror", () => { if (!cargo && !usarEsquema) activarEsquema(); });  // si el mapa no puede cargar, se cambia al esquema enseguida
   tiles.addTo(lmap);
   capa = L.layerGroup().addTo(lmap);
-  setTimeout(() => { if (!cargo && !usarEsquema) activarEsquema(); }, 2500);  // si los mapas no cargan, usamos el esquema
+  setTimeout(() => { if (!cargo && !usarEsquema) activarEsquema(); }, 8000);  // si los mapas no cargan, usamos el esquema
 }
 function activarEsquema(){
   usarEsquema = true; $("lmap").hidden = true; $("smap").removeAttribute("hidden");   // en un dibujo SVG hay que sacar el atributo "hidden"
@@ -1190,9 +1189,9 @@ function render(){
     return `<article class="card ${n==="Gris"?"gris":""} ${sel===h.id?"on":""}" id="h${h.id}">
       <div style="min-width:0">
         <div class="row" style="justify-content:space-between"><h3>${esc(h.nombre)}</h3><span class="state s-${n}"><i class="dot" style="background:currentColor;margin:0"></i>${n}</span></div>
-        <div class="meta">${h.zona} · ${esc(h.dir)}</div>
-        <div class="fine">${n==="Gris" ? `Sin actualizar hace ${d} días. Sus necesidades pueden haber cambiado.` : `Actualizado el ${fmt(h.fecha)} · ${h.donantes} donantes este mes`}</div>
-        <div class="tags">${h.cats.map(c => `<span class="tag${catsElegidas().includes(c) ? " on" : ""}">${c}</span>`).join("")}</div>
+        <div class="meta">${esc(h.zona)} · ${esc(h.dir)}</div>
+        <div class="fine">${n==="Gris" ? (d > 365 ? "Sin fecha de actualización. Sus necesidades pueden haber cambiado." : `Sin actualizar hace ${d} días. Sus necesidades pueden haber cambiado.`) : `Actualizado el ${fmt(h.fecha)} · ${h.donantes} donantes este mes`}</div>
+        <div class="tags">${h.cats.map(c => `<span class="tag${catsElegidas().includes(c) ? " on" : ""}">${esc(c)}</span>`).join("")}</div>
         <div class="row">
           <a class="btn sm wa" href="${waLink(h)}" target="_blank" rel="noopener" data-wa="${h.id}">WhatsApp</a>
           <a class="btn sm ghost" href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}" target="_blank" rel="noopener">Cómo llegar</a>
@@ -1359,16 +1358,25 @@ $("fActualizar").onsubmit = async e => { e.preventDefault(); const u = urgencia(
 
 /* ===== INICIO ===== */
 /* ===== 9. CARGAR DATOS DESDE LA HOJA DE GOOGLE ===== */
-const num = v => (typeof v === "number" && isFinite(v)) ? v : null;
+const num = v => { const n = typeof v === "number" ? v : parseFloat(String(v ?? "").replace(",", ".")); return isFinite(n) ? n : null; };
+/* Arregla los datos que vienen de la hoja: tildes, mayúsculas, números y fechas */
+const sinTilde = s => String(s ?? "").normalize("NFD").replace(/[\u0300-\u036f]/g, "").trim().toLowerCase();
+const catOficial = c => CATS.find(k => sinTilde(k) === sinTilde(c)) || String(c).trim();
+const listaCats = v => (Array.isArray(v) ? v : String(v ?? "").split(",")).map(c => String(c).trim()).filter(Boolean).map(catOficial);
+const nivelOk = v => { const s = sinTilde(v); return s === "rojo" ? "Rojo" : s === "verde" ? "Verde" : "Amarillo"; };  // "Rojo (en revisión)" se ve amarillo
+const coordOk = v => { const n = num(v); return n !== null && Math.abs(n) > 1 ? n : null; };  // 0 o vacío = sin coordenadas
+const fechaOk = v => { const f = new Date(v); return isNaN(f) ? new Date(0) : f; };
 async function cargarDatos(){
   try {
     // "?t=..." y "no-store" hacen que el navegador pida datos nuevos cada vez (sin usar una copia vieja)
     const pedir = () => fetch(URL_APPS + "?t=" + Date.now(), {cache:"no-store"}).then(r => { if (!r.ok) throw new Error(r.status); return r.json(); });
     let d;
     try { d = await pedir(); } catch (e) { d = await pedir(); }   // si falla, prueba una vez más
-    HOGARES = d.hogares.map(h => ({ ...h, lat: num(h.lat) ?? C.lat, lng: num(h.lng) ?? C.lng,
-      fecha: new Date(h.fecha), estado: "Aprobado" }));
-    PATROS = d.patrocinadores; PENDIENTES = d.pendientes; MURO = d.muro || [];
+    HOGARES = (d.hogares || []).map(h => ({ ...h, nombre: String(h.nombre ?? ""), zona: String(h.zona ?? "").trim(),
+      dir: String(h.dir ?? ""), wa: String(h.wa ?? "").replace(/\D/g, "").replace(/^591(?=\d{8}$)/, ""),
+      cats: listaCats(h.cats), reportado: nivelOk(h.reportado), donantes: Number(h.donantes) || 0,
+      lat: coordOk(h.lat) ?? C.lat, lng: coordOk(h.lng) ?? C.lng, fecha: fechaOk(h.fecha), estado: "Aprobado" }));
+    PATROS = d.patrocinadores || []; PENDIENTES = Number(d.pendientes) || 0; MURO = d.muro || [];
   } catch (e) { errorCarga = true; }
   cargando = false; render(); renderPatros(); renderMuro();
 }
@@ -1379,14 +1387,20 @@ function linkLogo(u){
   return (/drive\.google\.com/.test(u) && m) ? fotoDrive(m[1] || m[2]) : u;
 }
 /* Botón "Quiero ser patrocinador": abre WhatsApp con el mensaje ya escrito */
+/* "@usuario" se vuelve link de Instagram; "www.algo.com" se vuelve https://www.algo.com */
+function linkWeb(u){
+  u = String(u || "").trim(); if (!u) return "";
+  if (u.startsWith("@")) return "https://www.instagram.com/" + u.slice(1) + "/";
+  return /^https?:\/\//i.test(u) ? u : "https://" + u;
+}
 const linkPatrocinio = () => "https://wa.me/591" + WHATSAPP_PATROCINIOS + "?text=" +
   encodeURIComponent("Hola, vi la página de Cruz Solidaria y me interesa ser patrocinador. ¿Me pueden contar cómo funciona?");
 function renderPatros(){
   $("sponsors").innerHTML = PATROS.map(p => {
     const logo = p.logo ? `<img src="${esc(linkLogo(p.logo))}" alt="" style="width:56px;height:56px;object-fit:contain;border-radius:14px">`
                         : `<div class="logo-ph">${esc(String(p.nombre).charAt(0))}</div>`;
-    const nombre = p.link ? `<a href="${esc(p.link)}" target="_blank" rel="noopener"><b>${esc(p.nombre)}</b></a>` : `<b>${esc(p.nombre)}</b>`;
-    return `<div class="slot">${logo}${nombre}<span>${esc(p.aporte)}</span></div>`;
+    const nombre = p.link ? `<a href="${esc(linkWeb(p.link))}" target="_blank" rel="noopener"><b>${esc(p.nombre)}</b></a>` : `<b>${esc(p.nombre)}</b>`;
+    return `<div class="slot">${logo}${nombre}<span>${esc(p.aporte || "")}</span></div>`;
   }).join("") + `<div class="slot"><div class="logo-ph">+</div><b>Tu empresa puede estar aquí</b>
     <a class="btn sm wa" href="${linkPatrocinio()}" target="_blank" rel="noopener">Quiero ser patrocinador</a>
     <span>WhatsApp: +591 ${WHATSAPP_PATROCINIOS}</span></div>`;
