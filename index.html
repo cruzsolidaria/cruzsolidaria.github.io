@@ -1106,31 +1106,10 @@ const hace = d => new Date(hoy - d*DIA);
 const URL_APPS = 'https://script.google.com/macros/s/AKfycbwmobF7KxX2SEFCQAjUpey0j3w_jDmi0tqGOhZYDNdvssBUTcqph8dglRvPSEl0Amh2IA/exec';
 /* WhatsApp de Paulina (patrocinios). Para cambiarlo, escribe otro número aquí (8 números, sin +591). */
 const WHATSAPP_PATROCINIOS = '77362667';
-/* "✓ Verificado" se marca en la hoja: casilla M "Datos confirmados (llamada o visita)".
-   Esta lista solo se usa de respaldo si la hoja todavía no manda esa casilla. */
-const CONFIRMADOS = ["Madre Francisca Casci", "Luz del Mundo"];
-
-/* Horario de atención de respaldo (sacado de Google Maps). Si la columna W de la hoja tiene horario, se usa ese. */
-const HORARIOS = {
-  "Don Bosco": "Lunes a viernes, 9:00 a 17:00",
-  "Niño Feliz": "Lunes a viernes, 8:00 a 16:30",
-  "Madre Francisca Casci": "Todos los días, 8:00 a 20:00"
-};
-
-/* Hogares encontrados en fuentes públicas (Google Maps) que todavía no confirmaron sus datos.
-   Se muestran con ubicación, horario y teléfono (si tienen), y con el aviso "Datos públicos".
-   Si uno de estos se inscribe o se agrega a la hoja de Google, la hoja manda y este se ignora. */
-const HOGARES_PUBLICOS = [
-  {nombre:"Hogar Madre Teresa de Calcuta (Misioneras de la Caridad)", zona:"Norte", dir:"Zona Norte, cerca del 7mo anillo", tel:"", lat:-17.7349548, lng:-63.1755559, horario:""},
-  {nombre:"Hogar San Lorenzo", zona:"Este", dir:"Zona Este, entre 3er y 4to anillo", tel:"", lat:-17.7793746, lng:-63.1543554, horario:"Lunes a viernes, 8:00 a 18:00"},
-  {nombre:"Hogar Madre María", zona:"Este", dir:"Calle Juan Zarraga Campos", tel:"3 3328181", lat:-17.7817477, lng:-63.1499907, horario:""},
-  {nombre:"Hogar Mano Amiga", zona:"Oeste", dir:"Zona Oeste, cerca de la Av. Hernando Sanabria", tel:"3 3532716", lat:-17.7776784, lng:-63.2011082, horario:""},
-  {nombre:"Hogar Virgen de Fátima", zona:"Oeste", dir:"Calle Tucabaca 2440", tel:"3 3541101", lat:-17.7787509, lng:-63.2009915, horario:""},
-  {nombre:"Hogar de Niños Santa Cruz", zona:"Oeste", dir:"Av. Hernando Sanabria 2740", tel:"3 3541010", lat:-17.7781403, lng:-63.1999345, horario:""},
-  {nombre:"Hogar de niñas Casa Maín", zona:"Sur", dir:"Av. Moscú, Barrio Tierras Nuevas El Carmen", tel:"", lat:-17.8489332, lng:-63.2172813, horario:"Todos los días, 8:30 a 12:00 y 15:00 a 18:30"},
-  {nombre:"Hogar de niñas Megumi", zona:"Sur", dir:"Zona Sur, después del 8vo anillo", tel:"77001810", lat:-17.8666803, lng:-63.2205456, horario:""}
-];
-
+/* Todo se maneja desde la hoja de Google (pestaña Hogares):
+   - "✓ Verificado": casilla M "Datos confirmados (llamada o visita)".
+   - Horario de atención: columna W.
+   - Para sumar un hogar: agregar la fila con Estado = Aprobado. */
 let HOGARES = [], PATROS = [], PENDIENTES = 0, cargando = true, errorCarga = false;
 let MURO = [];   // las fotos del muro vienen de la hoja (pestaña Muro)
 
@@ -1231,13 +1210,13 @@ function render(){
   $("cards").innerHTML = vs.length ? vs.map(h => { const n = nivelFinal(h), d = dias(h.fecha);
     return `<article class="card ${n==="Gris"?"gris":""} ${sel===h.id?"on":""}" id="h${h.id}">
       <div style="min-width:0">
-        <div class="row" style="justify-content:space-between"><h3>${esc(h.nombre)}</h3><span class="state s-${n}"><i class="dot" style="background:currentColor;margin:0"></i>${h.publico ? "Sin datos" : n}</span></div>
+        <div class="row" style="justify-content:space-between"><h3>${esc(h.nombre)}</h3><span class="state s-${n}"><i class="dot" style="background:currentColor;margin:0"></i>${h.sinDatos ? "Sin datos" : n}</span></div>
         <div class="meta">${esc(h.zona)} · ${esc(h.dir)}</div>
         ${h.confirmado
           ? `<div class="fine" style="color:var(--green);margin-top:4px;font-weight:700">✓ Verificado por Cruz Solidaria</div>`
           : `<div class="fine" style="margin-top:4px;font-weight:700">📍 Datos públicos (Google Maps) · en proceso de confirmación</div>`}
         ${h.horario ? `<div class="fine">🕒 Horario de atención: ${esc(h.horario)}</div>` : ""}
-        <div class="fine">${h.publico ? "Todavía no nos contó qué necesita este mes. Consulta antes de llevar tu donación."
+        <div class="fine">${h.sinDatos ? "Todavía no nos contó qué necesita este mes. Consulta antes de llevar tu donación."
           : n==="Gris" ? (d > 365 ? "Sin fecha de actualización. Sus necesidades pueden haber cambiado." : `Sin actualizar hace ${d} días. Sus necesidades pueden haber cambiado.`) : `Actualizado el ${fmt(h.fecha)} · ${h.donantes} donantes este mes`}</div>
         <div class="tags">${h.cats.map(c => `<span class="tag${catsElegidas().includes(c) ? " on" : ""}">${esc(c)}</span>`).join("")}</div>
         <div class="row">
@@ -1287,7 +1266,7 @@ function abrir(id){ $(id).hidden = false; const f = $(id).querySelector("input,s
 function cerrar(id){ $(id).hidden = true; }
 document.querySelectorAll(".modal").forEach(m => m.addEventListener("click", e => { if (e.target === m || e.target.hasAttribute("data-close")) m.hidden = true; }));
 document.addEventListener("keydown", e => { if (e.key === "Escape") document.querySelectorAll(".modal").forEach(m => m.hidden = true); });
-const llenarHogares = (s, soloHoja) => { s.innerHTML = ""; aprobados().filter(h => !(soloHoja && h.publico)).forEach(h => s.add(new Option(h.nombre, h.id))); };
+const llenarHogares = s => { s.innerHTML = ""; aprobados().forEach(h => s.add(new Option(h.nombre, h.id))); };
 
 /* Lee algo guardado en el navegador (por ejemplo, el nombre de quien se registró) */
 function leerLocal(clave){ try { return localStorage.getItem(clave); } catch (e) { return null; } }
@@ -1379,7 +1358,7 @@ const urgencia = () => document.querySelector("input[name=aUrg]:checked").value;
 function mostrarRegla(){ const u = urgencia(); $("aRule").textContent = REGLAS[u]; $("aFotoCampo").hidden = u !== "Rojo"; $("aErr").textContent = ""; }
 document.querySelectorAll("input[name=aUrg]").forEach(r => r.onchange = mostrarRegla);
 $("aCats").addEventListener("change", e => { if (urgencia() === "Rojo" && $("aCats").querySelectorAll(":checked").length > 2) { e.target.checked = false; $("aErr").textContent = "En rojo solo puedes marcar hasta 2 categorías."; } });
-$("btnActualizar").onclick = () => { llenarHogares($("aHog"), true); $("fActualizar").reset(); mostrarRegla();
+$("btnActualizar").onclick = () => { llenarHogares($("aHog")); $("fActualizar").reset(); mostrarRegla();
   $("fActualizar").hidden = false; $("aOk").hidden = true; ocupado("aBtn", false, "Guardar actualización"); abrir("mActualizar"); };
 $("fActualizar").onsubmit = async e => { e.preventDefault(); const u = urgencia(), cats = [...$("aCats").querySelectorAll(":checked")].map(c => c.value);
   if (!cats.length) { $("aErr").textContent = "Marca al menos una categoría."; return; }
@@ -1415,11 +1394,6 @@ const listaCats = v => (Array.isArray(v) ? v : String(v ?? "").split(",")).map(c
 const nivelOk = v => { const s = sinTilde(v); return s === "rojo" ? "Rojo" : s === "verde" ? "Verde" : "Amarillo"; };  // "Rojo (en revisión)" se ve amarillo
 const coordOk = v => { const n = num(v); return n !== null && Math.abs(n) > 1 ? n : null; };  // 0 o vacío = sin coordenadas
 const fechaOk = v => { const f = new Date(v); return isNaN(f) ? new Date(0) : f; };
-/* Compara nombres sin tildes ni mayúsculas ("Hogar Don Bosco" contiene "don bosco") */
-const tieneNombre = (nombre, lista) => lista.some(n => sinTilde(nombre).includes(sinTilde(n)));
-const mismoNombre = (a, b) => { const x = sinTilde(a).replace(/[^a-z ]/g, ""), y = sinTilde(b).replace(/[^a-z ]/g, "");
-  return x.length > 5 && y.length > 5 && (x === y || x.includes(y) || y.includes(x)); };
-const buscarHorario = nombre => { const k = Object.keys(HORARIOS).find(n => sinTilde(nombre).includes(sinTilde(n))); return k ? HORARIOS[k] : ""; };
 /* Esconde las filas de prueba de la hoja (nombre "hola", "prueba", "test" o números 7000000x) */
 const esPrueba = h => /^(hola|prueba|test|ejemplo)\b/.test(sinTilde(h.nombre)) || /^7000000\d$/.test(String(h.wa || ""));
 async function cargarDatos(){
@@ -1433,20 +1407,8 @@ async function cargarDatos(){
       cats: listaCats(h.cats), reportado: nivelOk(h.reportado), donantes: Number(h.donantes) || 0,
       lat: coordOk(h.lat) ?? C.lat, lng: coordOk(h.lng) ?? C.lng, conCoord: coordOk(h.lat) != null && coordOk(h.lng) != null, fecha: fechaOk(h.fecha), estado: "Aprobado" }))
       .filter(h => !esPrueba(h))
-      .map(h => ({ ...h,
-        // Si la hoja manda la casilla "Datos confirmados" (columna M), manda la hoja; si no, se usa la lista CONFIRMADOS
-        confirmado: typeof h.confirmado === "boolean" ? h.confirmado : tieneNombre(h.nombre, CONFIRMADOS),
-        publico: false,
-        horario: String(h.horario ?? "").trim() || buscarHorario(h.nombre) }));
-    // Suma los hogares de fuentes públicas que todavía no están en la hoja
-    let idPub = 9001;
-    HOGARES_PUBLICOS.forEach(p => {
-      if (HOGARES.some(h => mismoNombre(h.nombre, p.nombre))) return;
-      const t = telefonos(p.tel);
-      HOGARES.push({ id: idPub++, nombre: p.nombre, zona: p.zona, dir: p.dir, wa: t.cel, fijo: t.fijo, cats: [], reportado: "Amarillo",
-        donantes: 0, lat: p.lat, lng: p.lng, conCoord: true, fecha: new Date(0), estado: "Aprobado",
-        confirmado: false, publico: true, horario: p.horario });
-    });
+      .map(h => ({ ...h, confirmado: h.confirmado === true, horario: String(h.horario ?? "").trim(),
+        sinDatos: !h.cats.length }));   // sin categorías = todavía no nos contó qué necesita
     PATROS = d.patrocinadores || []; PENDIENTES = Number(d.pendientes) || 0; MURO = d.muro || [];
   } catch (e) { errorCarga = true; }
   cargando = false; render(); renderPatros(); renderMuro();
