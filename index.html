@@ -868,7 +868,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
         <path d="M50 56 C43.5 51.2 42.6 46.4 45.8 44.6 C48 43.4 49.5 44.6 50 46.2 C50.5 44.6 52 43.4 54.2 44.6 C57.4 46.4 56.5 51.2 50 56 Z" fill="var(--heart)"/>
         <circle cx="50" cy="73" r="3.2" fill="var(--amarillo)"/>
       </svg>
-      <span class="wordmark"><b>Cruz</b> Solidaria<small>Hogares de niños · Santa Cruz</small></span>
+      <span class="wordmark"><b>Cruz</b> Solidaria<small>Hogares y fundaciones · Santa Cruz</small></span>
     </a>
     <div class="navlinks">
       <a href="#nosotros">Quiénes somos</a>
@@ -884,8 +884,9 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <section class="hero" id="inicio">
     <div>
       <div class="eyebrow">Santa Cruz de la Sierra · Economía circular</div>
-      <h1>Tu ayuda llega directo <em>a un hogar</em> que la necesita.</h1>
-      <p class="lead">Encuentra los hogares de niños cerca de ti, mira qué necesitan hoy y escríbeles directo. Sin intermediarios: tu ayuda llega entera.</p>
+      <h1>Tu ayuda llega directo <em>a quien</em> la necesita.</h1>
+      <p class="lead">Cruz Solidaria es un mapa gratuito de los hogares de niños y las fundaciones de Santa Cruz que reciben donaciones. Cada institución cuenta qué le falta este mes (alimentos, ropa, útiles, muebles y más) y tú la contactas directo por WhatsApp o por teléfono para llevar tu ayuda.</p>
+      <p class="lead" style="font-size:.95em;margin-top:8px"><b>Nosotros no recibimos ni transportamos donaciones:</b> solo te conectamos, para que tu ayuda llegue entera.</p>
       <div class="cta-row">
         <a class="btn" href="#directorio">Empezar a donar →</a>
         <a class="btn ghost" href="#hogares">Inscribir mi hogar</a>
@@ -894,7 +895,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <ol class="steps">
       <li><div class="n">1</div><div><b>Elige qué quieres donar</b><span>Elige una o varias categorías y la zona de la ciudad donde estás.</span></div></li>
       <li><div class="n">2</div><div><b>Mira el semáforo</b><span>Rojo es urgencia máxima. Cada hogar actualiza su estado una vez al mes.</span></div></li>
-      <li><div class="n">3</div><div><b>Escríbeles por WhatsApp</b><span>El mensaje ya va armado con lo que elegiste donar.</span></div></li>
+      <li><div class="n">3</div><div><b>Escríbeles o llámalos</b><span>Por WhatsApp el mensaje ya va armado con lo que elegiste donar. Si solo tienen teléfono fijo, puedes llamarlos.</span></div></li>
     </ol>
   </section>
 </div>
@@ -904,7 +905,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div class="sec-head">
       <div><div class="eyebrow">Quiénes somos</div><h2>Tres estudiantes cruceños con una idea</h2>
-      <p>Creamos Cruz Solidaria porque queríamos que ayudar a un hogar de niños fuera tan fácil como mandar un mensaje.</p></div>
+      <p>Creamos Cruz Solidaria porque queríamos que ayudar a un hogar o a una fundación fuera tan fácil como mandar un mensaje.</p></div>
     </div>
     <div class="about">
       <div class="team">
@@ -979,8 +980,8 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="homes-grid">
       <div>
         <ol class="hsteps">
-          <li><div class="n">1</div><b>Llenas el formulario</b><span>Nombre, dirección y WhatsApp del hogar. Toma 5 minutos.</span></li>
-          <li><div class="n">2</div><b>Verificamos tus datos</b><span>Hablamos con el responsable, confirmamos la dirección y coordinamos una visita o videollamada.</span></li>
+          <li><div class="n">1</div><b>Llenas el formulario</b><span>Nombre, dirección y WhatsApp o teléfono del hogar. Toma 5 minutos.</span></li>
+          <li><div class="n">2</div><b>Verificamos tus datos</b><span>Te llamamos o visitamos para confirmar el nombre, la dirección y el teléfono del hogar.</span></li>
           <li><div class="n">3</div><b>Apareces en el mapa</b><span>Te damos un código secreto para actualizar cada mes tus necesidades y tu semáforo.</span></li>
         </ol>
         <div class="cta-row">
@@ -992,11 +993,10 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <div class="req">
         <h3>Qué necesitamos para sumarte</h3>
         <ul>
-          <li>Un número de WhatsApp del hogar</li>
+          <li>Un número de WhatsApp o teléfono fijo del hogar</li>
           <li>Nombre y cargo de la persona responsable</li>
-          <li>Una visita o videollamada para conocerlos</li>
-          <li>Tu autorización para aparecer en la página</li>
-          <li>Fotos del hogar sin rostros de niños</li>
+          <li>Una llamada o visita para confirmar tus datos</li>
+          <li>Que nos cuentes qué necesitan este mes</li>
         </ul>
         <p class="fine">Puedes salir de la plataforma cuando quieras.</p>
       </div>
@@ -1055,7 +1055,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <label class="f">Zona<select id="iZona" required><option>Norte</option><option>Sur</option><option>Centro</option><option>Este</option><option>Oeste</option></select></label>
     <label class="f">Dirección exacta<input type="text" id="iDir" required></label>
     <label class="f">Enlace de Google Maps<input type="text" inputmode="url" id="iMaps" placeholder="https://maps.app.goo.gl/..."></label>
-    <label class="f">WhatsApp del hogar<input type="tel" id="iWa" required placeholder="7XXXXXXX"></label>
+    <label class="f">WhatsApp o teléfono fijo del hogar<input type="tel" id="iWa" required placeholder="Celular 7XXXXXXX o fijo 3XXXXXX"></label>
     <label class="f">Nombre y cargo del responsable<input type="text" id="iResp" required placeholder="Ej: María Pérez, directora"></label>
     <div class="f" style="font-weight:700;font-size:14px">¿Qué tan urgente es la necesidad del hogar este mes?
       <div class="urg" style="margin-top:4px">
@@ -1066,7 +1066,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <p class="rule" id="iRule"></p>
     <div class="f" style="font-weight:700;font-size:14px">¿Qué necesitan este mes?<div class="checks" id="iCats" style="margin-top:4px"></div></div>
     <label class="registro-acepto"><input type="checkbox" id="iAutoriza" required> Soy responsable del hogar y autorizo que aparezca en Cruz Solidaria con su nombre, dirección, WhatsApp y necesidades. Sé que la página no publica fotos de niños y que podemos pedir salir cuando queramos.</label>
-    <p class="rule">Después te escribimos por WhatsApp para confirmar tu autorización, conocerlos y coordinar una visita.</p>
+    <p class="rule">Después te llamamos o escribimos para confirmar tus datos y darte tu código secreto.</p>
     <p class="err" id="iErr"></p>
     <div class="actions"><button type="button" class="btn ghost" data-close>Cancelar</button><button class="btn" id="iBtn">Enviar solicitud</button></div>
   </form>
@@ -1100,7 +1100,7 @@ const CATS = ["Alimentos","Higiene","Pañales","Ropa","Útiles escolares","Jugue
 const DIA = 864e5, hoy = Date.now();
 const hace = d => new Date(hoy - d*DIA);
 /* Los hogares y patrocinadores ahora vienen de la hoja de Google (Apps Script).
-   Solo aparecen los hogares con Estado = Aprobado y los 4 requisitos tildados. */
+   Solo aparecen los hogares con Estado = Aprobado (ya confirmados por llamada o visita). */
 const URL_APPS = 'https://script.google.com/macros/s/AKfycbwmobF7KxX2SEFCQAjUpey0j3w_jDmi0tqGOhZYDNdvssBUTcqph8dglRvPSEl0Amh2IA/exec';
 /* WhatsApp de Paulina (patrocinios). Para cambiarlo, escribe otro número aquí (8 números, sin +591). */
 const WHATSAPP_PATROCINIOS = '77362667';
@@ -1116,6 +1116,22 @@ const waLink = h => { const cs = catsElegidas(), dona = cs.length ? h.cats.filte
   const txt = dona.length ? "Hola, vengo de Cruz Solidaria y quiero donar: " + dona.join(", ") + ". ¿Cuándo puedo llevarlo?"
                           : "Hola, vengo de Cruz Solidaria y quiero hacer una donación. ¿Qué necesitan?";
   return "https://wa.me/591" + h.wa.replace(/\D/g,"") + "?text=" + encodeURIComponent(txt); };
+/* Teléfonos: un celular (8 dígitos que empiezan con 6 o 7) se abre en WhatsApp; un teléfono fijo se llama.
+   En la hoja se puede escribir uno solo o los dos separados con "/" (ejemplo: 73151322 / 3361234). */
+function telefonos(raw){
+  // Junta todos los dígitos, quita el +591 y los va cortando: celular = 8 dígitos (6 o 7 adelante),
+  // fijo = 7 dígitos, u 8 si empieza con el código de área 3. Así funciona con "/", comas o espacios.
+  let d = String(raw ?? "").split(/[\/,;|]|\sy\s|\so\s/).map(t => t.replace(/\D/g, "").replace(/^591(?=\d{7})/, "")).join("");
+  let cel = "", fijo = "";
+  while (d.length >= 7) {
+    if (/^[67]/.test(d) && d.length >= 8) { cel = cel || d.slice(0, 8); d = d.slice(8); }
+    else if (/^3/.test(d) && (d.length === 8 || d.length === 16 || (d.length > 8 && /^3[3-9]/.test(d) && /^[67]/.test(d.slice(8))) )) { fijo = fijo || d.slice(0, 8); d = d.slice(8); }
+    else { fijo = fijo || d.slice(0, 7); d = d.slice(7); }
+  }
+  return { cel, fijo };
+}
+const fijoBonito = f => { const n = f.length === 7 ? f : f.slice(1); return "3 " + n.slice(0, 3) + " " + n.slice(3); };   // 3 353 2716
+const telLink = f => "tel:+591" + (f.length === 7 ? "3" + f : f);   // en Santa Cruz el código de área es 3
 const cssVar = n => getComputedStyle(document.documentElement).getPropertyValue("--" + n.toLowerCase()).trim();
 const fmt = f => f.toLocaleDateString("es-BO",{day:"numeric",month:"short"});
 const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
@@ -1190,13 +1206,15 @@ function render(){
       <div style="min-width:0">
         <div class="row" style="justify-content:space-between"><h3>${esc(h.nombre)}</h3><span class="state s-${n}"><i class="dot" style="background:currentColor;margin:0"></i>${n}</span></div>
         <div class="meta">${esc(h.zona)} · ${esc(h.dir)}</div>
+        <div class="fine" style="color:var(--green);margin-top:4px;font-weight:700">✓ Verificado por Cruz Solidaria</div>
         <div class="fine">${n==="Gris" ? (d > 365 ? "Sin fecha de actualización. Sus necesidades pueden haber cambiado." : `Sin actualizar hace ${d} días. Sus necesidades pueden haber cambiado.`) : `Actualizado el ${fmt(h.fecha)} · ${h.donantes} donantes este mes`}</div>
         <div class="tags">${h.cats.map(c => `<span class="tag${catsElegidas().includes(c) ? " on" : ""}">${esc(c)}</span>`).join("")}</div>
         <div class="row">
-          <a class="btn sm wa" href="${waLink(h)}" target="_blank" rel="noopener" data-wa="${h.id}">WhatsApp</a>
-          <a class="btn sm ghost" href="https://www.google.com/maps/dir/?api=1&destination=${h.lat},${h.lng}" target="_blank" rel="noopener">Cómo llegar</a>
+          ${h.wa ? `<a class="btn sm wa" href="${waLink(h)}" target="_blank" rel="noopener" data-wa="${h.id}">WhatsApp</a>` : ""}
+          ${h.fijo ? `<a class="btn sm ${h.wa ? "ghost" : "wa"}" href="${telLink(h.fijo)}" data-wa="${h.id}">Llamar</a>` : ""}
+          <a class="btn sm ghost" href="https://www.google.com/maps/dir/?api=1&destination=${h.conCoord ? h.lat + "," + h.lng : encodeURIComponent(h.nombre + ", " + h.dir + ", Santa Cruz, Bolivia")}" target="_blank" rel="noopener">Cómo llegar</a>
         </div>
-        <div class="fine" style="margin-top:6px">WhatsApp: +591 ${h.wa}</div>
+        <div class="fine" style="margin-top:6px">${[h.wa ? `WhatsApp: +591 ${h.wa}` : "", h.fijo ? `Teléfono fijo: ${fijoBonito(h.fijo)}` : ""].filter(Boolean).join(" · ") || "Todavía no tiene teléfono publicado. Puedes ir directo con «Cómo llegar»."}</div>
       </div></article>`; }).join("")
     : `<div class="empty">Ningún hogar coincide con esos filtros. Prueba con otra zona o categoría.</div>`;
   const p = PENDIENTES;
@@ -1212,7 +1230,7 @@ $("fLimpiar").onclick = () => { $("fCat").querySelectorAll(":checked").forEach(i
 let quizHogar = null, votos = {si:0, no:0};
 $("cards").addEventListener("click", e => { const a = e.target.closest("[data-wa]"); if (!a) return;
   quizHogar = HOGARES.find(h => h.id == a.dataset.wa);
-  $("qSub").textContent = "Estás por escribirle a " + quizHogar.nombre + ". Tu respuesta nos ayuda a medir el impacto del proyecto.";
+  $("qSub").textContent = "Estás por contactar a " + quizHogar.nombre + ". Tu respuesta nos ayuda a medir el impacto del proyecto.";
   $("qBtns").hidden = false; $("qOk").hidden = true;
   setTimeout(() => abrir("mQuiz"), 300); });
 $("qBtns").addEventListener("click", e => { const b = e.target.closest("[data-a]"); if (!b) return;
@@ -1294,15 +1312,15 @@ $("fSubir").onsubmit = async e => { e.preventDefault();
 $("iCats").innerHTML = CATS.map((c,i) => `<label><input type="checkbox" value="${c}" id="ic${i}">${c}</label>`).join("");
 const urgInscripcion = () => document.querySelector("input[name=iUrg]:checked").value;
 const REGLA_INSCRIPCION = {
-  Rojo: "Rojo: urgencia máxima, hasta 2 categorías. Lo confirmamos en la visita; mientras tanto tu hogar se muestra en amarillo.",
+  Rojo: "Rojo: urgencia máxima, hasta 2 categorías. Lo confirmamos cuando te llamemos; mientras tanto tu hogar se muestra en amarillo.",
   Amarillo: "Amarillo: necesitan ayuda pero todavía tienen reservas.",
   Verde: "Verde: están estables. Aceptan donaciones no urgentes como ropa, juguetes o muebles." };
 const mostrarReglaInscripcion = () => { $("iRule").textContent = REGLA_INSCRIPCION[urgInscripcion()]; };
 document.querySelectorAll("input[name=iUrg]").forEach(r => r.onchange = mostrarReglaInscripcion);
 $("iCats").addEventListener("change", e => { if (urgInscripcion() === "Rojo" && $("iCats").querySelectorAll(":checked").length > 2) { e.target.checked = false; $("iErr").textContent = "En rojo solo puedes marcar hasta 2 categorías."; } });
 $("btnInscribir").onclick = () => { $("fInscribir").reset(); mostrarReglaInscripcion(); $("iErr").textContent = ""; $("iBtn").disabled = false; $("iBtn").textContent = "Enviar solicitud"; abrir("mInscribir"); };
-$("fInscribir").onsubmit = async e => { e.preventDefault(); const wa = $("iWa").value.replace(/\D/g,"");
-  if (wa.length !== 8) { $("iErr").textContent = "El número debe tener 8 dígitos, sin el +591."; return; }
+$("fInscribir").onsubmit = async e => { e.preventDefault(); const wa = $("iWa").value.replace(/\D/g,"").replace(/^591(?=\d{7,8}$)/, "");
+  if (!/^[67]\d{7}$/.test(wa) && !/^3?\d{7}$/.test(wa)) { $("iErr").textContent = "Escribe un celular de 8 dígitos o un teléfono fijo de 7, sin el +591."; return; }
   const iu = urgInscripcion(), ics = [...$("iCats").querySelectorAll(":checked")].map(c => c.value);
   if (!ics.length) { $("iErr").textContent = "Marca al menos una cosa que necesiten este mes."; return; }
   if (iu === "Rojo" && ics.length > 2) { $("iErr").textContent = "En rojo solo puedes marcar hasta 2 categorías."; return; }
@@ -1313,7 +1331,7 @@ $("fInscribir").onsubmit = async e => { e.preventDefault(); const wa = $("iWa").
       form:"hogar", nombre:$("iNom").value, zona:$("iZona").value, direccion:$("iDir").value,
       maps:$("iMaps").value, whatsapp:wa, responsable:$("iResp").value, semaforo:iu, cats:ics.join(", ") })});
     PENDIENTES++; cerrar("mInscribir"); render();
-    $("pendientes").textContent = "¡Solicitud enviada! Te vamos a escribir por WhatsApp para verificar los datos.";
+    $("pendientes").textContent = "¡Solicitud enviada! Te vamos a contactar para verificar los datos.";
     $("pendientes").scrollIntoView({block:"center"});
   } catch (err) {
     $("iErr").textContent = "No se pudo enviar. Revisa tu internet y prueba de nuevo.";
@@ -1373,9 +1391,9 @@ async function cargarDatos(){
     let d;
     try { d = await pedir(); } catch (e) { d = await pedir(); }   // si falla, prueba una vez más
     HOGARES = (d.hogares || []).map(h => ({ ...h, nombre: String(h.nombre ?? ""), zona: String(h.zona ?? "").trim(),
-      dir: String(h.dir ?? ""), wa: String(h.wa ?? "").replace(/\D/g, "").replace(/^591(?=\d{8}$)/, ""),
+      dir: String(h.dir ?? ""), wa: telefonos(h.wa).cel, fijo: telefonos(h.wa).fijo,
       cats: listaCats(h.cats), reportado: nivelOk(h.reportado), donantes: Number(h.donantes) || 0,
-      lat: coordOk(h.lat) ?? C.lat, lng: coordOk(h.lng) ?? C.lng, fecha: fechaOk(h.fecha), estado: "Aprobado" }));
+      lat: coordOk(h.lat) ?? C.lat, lng: coordOk(h.lng) ?? C.lng, conCoord: coordOk(h.lat) != null && coordOk(h.lng) != null, fecha: fechaOk(h.fecha), estado: "Aprobado" }));
     PATROS = d.patrocinadores || []; PENDIENTES = Number(d.pendientes) || 0; MURO = d.muro || [];
   } catch (e) { errorCarga = true; }
   cargando = false; render(); renderPatros(); renderMuro();
@@ -1492,12 +1510,12 @@ iniciarMapa(); render(); renderMuro(); renderPatros(); cargarDatos();
 
   // Cuando alguien toca un botón de WhatsApp, también se anota quién fue
   document.addEventListener('click', (e) => {
-    const link = e.target.closest('a[href*="wa.me"], a[href*="whatsapp"]');
+    const link = e.target.closest('a[href*="wa.me"], a[href*="whatsapp"], a[href^="tel:"]');
     if (!link) return;
     enviar({
       nombre: leer('cs_nombre') || 'Visitante sin registro',
       correo: leer('cs_correo') || '',
-      accion: 'Contactó por WhatsApp: ' + link.href
+      accion: (link.href.startsWith('tel:') ? 'Llamó por teléfono: ' : 'Contactó por WhatsApp: ') + link.href
     });
   });
 })();
