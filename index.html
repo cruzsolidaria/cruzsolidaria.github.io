@@ -934,7 +934,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <div class="sec-head">
       <div><div class="eyebrow">Hogares que necesitan ayuda</div><h2>Hogares y sus necesidades del mes</h2>
       <p>Ordenados por urgencia. Si un hogar no actualiza en más de 30 días, pasa a gris y baja al final.</p>
-      <p class="fine"><b style="color:var(--green)">✓ Verificado</b>: el equipo confirmó sus datos por llamada o visita. <b>📍 Datos públicos</b>: lo encontramos en Google Maps y estamos confirmando sus datos.</p></div>
+      <p class="fine"><b style="color:var(--green)">✓ Verificado</b>: el equipo confirmó sus datos por WhatsApp o por teléfono. <b>📍 Datos públicos</b>: lo encontramos en Google Maps y estamos confirmando sus datos.</p></div>
     </div>
     <div class="filters">
       <div class="field fcats">Qué quieres donar (puedes elegir varias)
@@ -977,12 +977,12 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
   <div class="wrap">
     <div class="eyebrow">Para hogares de niños y fundaciones</div>
     <h2>¿Diriges un hogar? Súmalo a Cruz Solidaria. Es gratis.</h2>
-    <p class="intro">Aparece en el mapa, cuenta qué necesitan este mes y recibe las donaciones directo, coordinando por WhatsApp. Nosotros no recibimos ni transportamos donaciones.</p>
+    <p class="intro">Aparece en el mapa, cuenta qué necesitan este mes y recibe las donaciones directo, coordinando por WhatsApp o por teléfono. Nosotros no recibimos ni transportamos donaciones.</p>
     <div class="homes-grid">
       <div>
         <ol class="hsteps">
-          <li><div class="n">1</div><b>Llenas el formulario</b><span>Nombre, dirección y WhatsApp o teléfono del hogar. Toma 5 minutos.</span></li>
-          <li><div class="n">2</div><b>Verificamos tus datos</b><span>Te llamamos o visitamos para confirmar el nombre, la dirección y el teléfono del hogar.</span></li>
+          <li><div class="n">1</div><b>Llenas el formulario</b><span>Nombre, dirección y un celular o teléfono fijo del hogar. Toma 5 minutos.</span></li>
+          <li><div class="n">2</div><b>Verificamos tus datos</b><span>Te escribimos por WhatsApp o te llamamos para confirmar el nombre, la dirección y el teléfono del hogar.</span></li>
           <li><div class="n">3</div><b>Apareces en el mapa</b><span>Te damos un código secreto para actualizar cada mes tus necesidades y tu semáforo.</span></li>
         </ol>
         <div class="cta-row">
@@ -994,9 +994,9 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       <div class="req">
         <h3>Qué necesitamos para sumarte</h3>
         <ul>
-          <li>Un número de WhatsApp o teléfono fijo del hogar</li>
+          <li>Un número de celular (de preferencia con WhatsApp) o un teléfono fijo</li>
           <li>Nombre y cargo de la persona responsable</li>
-          <li>Una llamada o visita para confirmar tus datos</li>
+          <li>Un mensaje o una llamada para confirmar tus datos</li>
           <li>Que nos cuentes qué necesitan este mes</li>
         </ul>
         <p class="fine">Puedes salir de la plataforma cuando quieras.</p>
@@ -1056,7 +1056,7 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
     <label class="f">Zona<select id="iZona" required><option>Norte</option><option>Sur</option><option>Centro</option><option>Este</option><option>Oeste</option></select></label>
     <label class="f">Dirección exacta<input type="text" id="iDir" required></label>
     <label class="f">Enlace de Google Maps<input type="text" inputmode="url" id="iMaps" placeholder="https://maps.app.goo.gl/..."></label>
-    <label class="f">WhatsApp o teléfono fijo del hogar<input type="tel" id="iWa" required placeholder="Celular 7XXXXXXX o fijo 3XXXXXX"></label>
+    <label class="f">Celular o teléfono fijo del hogar<input type="tel" id="iWa" required placeholder="Celular 7XXXXXXX o fijo 3XXXXXX"><span class="fine" style="font-weight:400">De preferencia un celular con WhatsApp, pero puede ser cualquier celular o un teléfono fijo.</span></label>
     <label class="f">Nombre y cargo del responsable<input type="text" id="iResp" required placeholder="Ej: María Pérez, directora"></label>
     <label class="f">Horario para recibir donaciones (opcional)<input type="text" id="iHor" placeholder="Ej: Lunes a viernes, 8:00 a 18:00"></label>
     <div class="f" style="font-weight:700;font-size:14px">¿Qué tan urgente es la necesidad del hogar este mes?
@@ -1067,8 +1067,8 @@ footer .cols{display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap}
       </div></div>
     <p class="rule" id="iRule"></p>
     <div class="f" style="font-weight:700;font-size:14px">¿Qué necesitan este mes?<div class="checks" id="iCats" style="margin-top:4px"></div></div>
-    <label class="registro-acepto"><input type="checkbox" id="iAutoriza" required> Soy responsable del hogar y autorizo que aparezca en Cruz Solidaria con su nombre, dirección, WhatsApp y necesidades. Sé que la página no publica fotos de niños y que podemos pedir salir cuando queramos.</label>
-    <p class="rule">Después te llamamos o escribimos para confirmar tus datos y darte tu código secreto.</p>
+    <label class="registro-acepto"><input type="checkbox" id="iAutoriza" required> Soy responsable del hogar y autorizo que aparezca en Cruz Solidaria con su nombre, dirección, teléfono y necesidades. Sé que la página no publica fotos de niños y que podemos pedir salir cuando queramos.</label>
+    <p class="rule">Después te escribimos o llamamos para confirmar tus datos y darte tu código secreto.</p>
     <p class="err" id="iErr"></p>
     <div class="actions"><button type="button" class="btn ghost" data-close>Cancelar</button><button class="btn" id="iBtn">Enviar solicitud</button></div>
   </form>
@@ -1102,12 +1102,12 @@ const CATS = ["Alimentos","Higiene","Pañales","Ropa","Útiles escolares","Jugue
 const DIA = 864e5, hoy = Date.now();
 const hace = d => new Date(hoy - d*DIA);
 /* Los hogares y patrocinadores ahora vienen de la hoja de Google (Apps Script).
-   Solo aparecen los hogares con Estado = Aprobado (ya confirmados por llamada o visita). */
+   Solo aparecen los hogares con Estado = Aprobado (ya confirmados por WhatsApp o por teléfono). */
 const URL_APPS = 'https://script.google.com/macros/s/AKfycbwmobF7KxX2SEFCQAjUpey0j3w_jDmi0tqGOhZYDNdvssBUTcqph8dglRvPSEl0Amh2IA/exec';
 /* WhatsApp de Paulina (patrocinios). Para cambiarlo, escribe otro número aquí (8 números, sin +591). */
 const WHATSAPP_PATROCINIOS = '77362667';
 /* Todo se maneja desde la hoja de Google (pestaña Hogares):
-   - "✓ Verificado": casilla M "Datos confirmados (llamada o visita)".
+   - "✓ Verificado": casilla M "Datos confirmados".
    - Horario de atención: columna W.
    - Para sumar un hogar: agregar la fila con Estado = Aprobado. */
 let HOGARES = [], PATROS = [], PENDIENTES = 0, cargando = true, errorCarga = false;
@@ -1221,10 +1221,11 @@ function render(){
         <div class="tags">${h.cats.map(c => `<span class="tag${catsElegidas().includes(c) ? " on" : ""}">${esc(c)}</span>`).join("")}</div>
         <div class="row">
           ${h.wa ? `<a class="btn sm wa" href="${waLink(h)}" target="_blank" rel="noopener" data-wa="${h.id}">WhatsApp</a>` : ""}
-          ${h.fijo ? `<a class="btn sm ${h.wa ? "ghost" : "wa"}" href="${telLink(h.fijo)}" data-wa="${h.id}">Llamar</a>` : ""}
+          ${h.fijo ? `<a class="btn sm ${h.wa ? "ghost" : "wa"}" href="${telLink(h.fijo)}" data-wa="${h.id}">Llamar</a>`
+                   : h.wa ? `<a class="btn sm ghost" href="${telLink(h.wa)}" data-wa="${h.id}">Llamar</a>` : ""}
           <a class="btn sm ghost" href="https://www.google.com/maps/dir/?api=1&destination=${h.conCoord ? h.lat + "," + h.lng : encodeURIComponent(h.nombre + ", " + h.dir + ", Santa Cruz, Bolivia")}" target="_blank" rel="noopener">Cómo llegar</a>
         </div>
-        <div class="fine" style="margin-top:6px">${[h.wa ? `WhatsApp: +591 ${h.wa}` : "", h.fijo ? `Teléfono fijo: ${fijoBonito(h.fijo)}` : ""].filter(Boolean).join(" · ") || (h.horario ? "No tiene teléfono publicado. Puedes ir directo en su horario de atención con «Cómo llegar»." : "No tiene teléfono publicado. Puedes ir directo con «Cómo llegar».")}</div>
+        <div class="fine" style="margin-top:6px">${[h.wa ? `Celular: +591 ${h.wa}` : "", h.fijo ? `Teléfono fijo: ${fijoBonito(h.fijo)}` : ""].filter(Boolean).join(" · ") || (h.horario ? "No tiene teléfono publicado. Puedes ir directo en su horario de atención con «Cómo llegar»." : "No tiene teléfono publicado. Puedes ir directo con «Cómo llegar».")}</div>
       </div></article>`; }).join("")
     : `<div class="empty">Ningún hogar coincide con esos filtros. Prueba con otra zona o categoría.</div>`;
   const p = PENDIENTES;
