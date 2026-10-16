@@ -160,7 +160,7 @@ section[id]{scroll-margin-top:calc(var(--alto-menu,70px) + 8px)}
 .objetivos p{margin:0 0 16px;font-size:15px}
 .objetivos ol{margin:0;padding-left:20px;display:grid;gap:6px;font-size:15px}
 
-/* Patrocinadores */
+/* Nos apoyan */
 .sponsors{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
 .slot{border:1.5px dashed var(--line);border-radius:16px;padding:22px;text-align:center;background:var(--surface);display:grid;gap:6px;place-items:center}
 .slot .logo-ph{width:56px;height:56px;border-radius:14px;background:var(--green-soft);display:grid;place-items:center;color:var(--green);font-family:var(--f-display);font-weight:800;font-size:24px}
