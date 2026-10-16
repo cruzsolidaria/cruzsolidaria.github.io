@@ -322,7 +322,7 @@ function linkLogo(u){
   const m = u.match(/\/d\/([\w-]+)|[?&]id=([\w-]+)/);
   return (/drive\.google\.com/.test(u) && m) ? fotoDrive(m[1] || m[2]) : u;
 }
-/* Botón "Quiero ser patrocinador": abre WhatsApp con el mensaje ya escrito */
+/* Botón "Quiero ser parte de la causa": abre WhatsApp con el mensaje ya escrito */
 /* "@usuario" se vuelve link de Instagram; "www.algo.com" se vuelve https://www.algo.com */
 function linkWeb(u){
   u = String(u || "").trim(); if (!u) return "";
@@ -330,7 +330,7 @@ function linkWeb(u){
   return /^https?:\/\//i.test(u) ? u : "https://" + u;
 }
 const linkPatrocinio = () => "https://wa.me/591" + WHATSAPP_PATROCINIOS + "?text=" +
-  encodeURIComponent("Hola, vi la página de Cruz Solidaria y me interesa ser patrocinador. ¿Me pueden contar cómo funciona?");
+  encodeURIComponent("Hola, vi la página de Cruz Solidaria y me gustaría ser parte de la causa. ¿Me pueden contar cómo funciona?");
 function renderPatros(){
   $("sponsors").innerHTML = PATROS.map(p => {
     const logo = p.logo ? `<img src="${esc(linkLogo(p.logo))}" alt="" style="width:56px;height:56px;object-fit:contain;border-radius:14px">`
@@ -338,7 +338,7 @@ function renderPatros(){
     const nombre = p.link ? `<a href="${esc(linkWeb(p.link))}" target="_blank" rel="noopener"><b>${esc(p.nombre)}</b></a>` : `<b>${esc(p.nombre)}</b>`;
     return `<div class="slot">${logo}${nombre}<span>${esc(p.aporte || "")}</span></div>`;
   }).join("") + `<div class="slot"><div class="logo-ph">+</div><b>Tu empresa puede estar aquí</b>
-    <a class="btn sm wa" href="${linkPatrocinio()}" target="_blank" rel="noopener">Quiero ser patrocinador</a>
+    <a class="btn sm wa" href="${linkPatrocinio()}" target="_blank" rel="noopener">Quiero ser parte de la causa</a>
     <span>WhatsApp: +591 ${WHATSAPP_PATROCINIOS}</span></div>`;
 }
 
