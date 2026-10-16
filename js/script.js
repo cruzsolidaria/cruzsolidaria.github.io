@@ -3,16 +3,16 @@
 const CATS = ["Alimentos","Higiene","Pañales","Ropa","Útiles escolares","Juguetes","Muebles","Electrodomésticos"];
 const DIA = 864e5, hoy = Date.now();
 const hace = d => new Date(hoy - d*DIA);
-/* Los hogares y patrocinadores ahora vienen de la hoja de Google (Apps Script).
+/* Los hogares y las empresas que nos apoyan ahora vienen de la hoja de Google (Apps Script).
    Solo aparecen los hogares con Estado = Aprobado (ya confirmados por WhatsApp o por teléfono). */
 const URL_APPS = 'https://script.google.com/macros/s/AKfycbwmobF7KxX2SEFCQAjUpey0j3w_jDmi0tqGOhZYDNdvssBUTcqph8dglRvPSEl0Amh2IA/exec';
-/* WhatsApp de Paulina (patrocinios). Para cambiarlo, escribe otro número aquí (8 números, sin +591). */
-const WHATSAPP_PATROCINIOS = '77362667';
+/* WhatsApp de Paulina (Nos apoyan). Para cambiarlo, escribe otro número aquí (8 números, sin +591). */
+const WHATSAPP_NOS_APOYAN = '77362667';
 /* Todo se maneja desde la hoja de Google (pestaña Hogares):
    - "✓ Verificado": casilla M "Datos confirmados".
    - Horario de atención: columna W.
    - Para sumar un hogar: agregar la fila con Estado = Aprobado. */
-let HOGARES = [], PATROS = [], PENDIENTES = 0, cargando = true, errorCarga = false;
+let HOGARES = [], APOYAN = [], PENDIENTES = 0, cargando = true, errorCarga = false;
 let MURO = [];   // las fotos del muro vienen de la hoja (pestaña Muro)
 
 /* ===== 2. REGLAS DEL SEMÁFORO ===== */
@@ -312,9 +312,9 @@ async function cargarDatos(){
       .filter(h => !esPrueba(h))
       .map(h => ({ ...h, confirmado: h.confirmado === true, horario: String(h.horario ?? "").trim(),
         sinDatos: !h.cats.length }));   // sin categorías = todavía no nos contó qué necesita
-    PATROS = d.patrocinadores || []; PENDIENTES = Number(d.pendientes) || 0; MURO = d.muro || [];
+    APOYAN = d.apoyan || []; PENDIENTES = Number(d.pendientes) || 0; MURO = d.muro || [];
   } catch (e) { errorCarga = true; }
-  cargando = false; render(); renderPatros(); renderMuro();
+  cargando = false; render(); renderApoyan(); renderMuro();
 }
 /* Si el logo es un link de Google Drive ("Compartir → Copiar enlace"), lo convierte en imagen */
 function linkLogo(u){
@@ -329,20 +329,20 @@ function linkWeb(u){
   if (u.startsWith("@")) return "https://www.instagram.com/" + u.slice(1) + "/";
   return /^https?:\/\//i.test(u) ? u : "https://" + u;
 }
-const linkPatrocinio = () => "https://wa.me/591" + WHATSAPP_PATROCINIOS + "?text=" +
+const linkSerParte = () => "https://wa.me/591" + WHATSAPP_NOS_APOYAN + "?text=" +
   encodeURIComponent("Hola, vi la página de Cruz Solidaria y me gustaría ser parte de la causa. ¿Me pueden contar cómo funciona?");
-function renderPatros(){
-  $("sponsors").innerHTML = PATROS.map(p => {
+function renderApoyan(){
+  $("sponsors").innerHTML = APOYAN.map(p => {
     const logo = p.logo ? `<img src="${esc(linkLogo(p.logo))}" alt="" style="width:56px;height:56px;object-fit:contain;border-radius:14px">`
                         : `<div class="logo-ph">${esc(String(p.nombre).charAt(0))}</div>`;
     const nombre = p.link ? `<a href="${esc(linkWeb(p.link))}" target="_blank" rel="noopener"><b>${esc(p.nombre)}</b></a>` : `<b>${esc(p.nombre)}</b>`;
     return `<div class="slot">${logo}${nombre}<span>${esc(p.aporte || "")}</span></div>`;
   }).join("") + `<div class="slot"><div class="logo-ph">+</div><b>Tu empresa puede estar aquí</b>
-    <a class="btn sm wa" href="${linkPatrocinio()}" target="_blank" rel="noopener">Quiero ser parte de la causa</a>
-    <span>WhatsApp: +591 ${WHATSAPP_PATROCINIOS}</span></div>`;
+    <a class="btn sm wa" href="${linkSerParte()}" target="_blank" rel="noopener">Quiero ser parte de la causa</a>
+    <span>WhatsApp: +591 ${WHATSAPP_NOS_APOYAN}</span></div>`;
 }
 
-iniciarMapa(); render(); renderMuro(); renderPatros(); cargarDatos();
+iniciarMapa(); render(); renderMuro(); renderApoyan(); cargarDatos();
 
 /* ===== MENÚ FIJO ARRIBA =====
    Guarda la altura del menú en --alto-menu (en celular es más alto) para que,
