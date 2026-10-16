@@ -343,3 +343,17 @@ function renderPatros(){
 }
 
 iniciarMapa(); render(); renderMuro(); renderPatros(); cargarDatos();
+
+/* ===== MENÚ FIJO ARRIBA =====
+   Guarda la altura del menú en --alto-menu (en celular es más alto) para que,
+   al tocar un botón del menú, el título de la sección no quede tapado.
+   También le pone una sombrita al menú cuando la página ya bajó. */
+(function () {
+  const barra = document.getElementById("topbar");
+  if (!barra) return;
+  const medir = () => document.documentElement.style.setProperty("--alto-menu", barra.offsetHeight + "px");
+  const sombra = () => barra.classList.toggle("con-sombra", window.scrollY > 8);
+  medir(); sombra();
+  window.addEventListener("resize", medir);
+  window.addEventListener("scroll", sombra, { passive: true });
+})();
