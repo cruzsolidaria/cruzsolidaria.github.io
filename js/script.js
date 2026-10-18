@@ -157,11 +157,19 @@ $("qBtns").addEventListener("click", e => { const b = e.target.closest("[data-a]
   render(); setTimeout(() => cerrar("mQuiz"), 1400); });
 
 /* ===== 7. MURO DE IMPACTO ===== */
-const fotoDrive = id => "https://drive.google.com/thumbnail?id=" + encodeURIComponent(id) + "&sz=w800";
+/* Fotos de Google Drive. Se usa la dirección de imagen directa (lh3), que también funciona en celulares
+   sin sesión de Google. Si falla, se prueba la de miniatura de Drive. */
+const fotoDrive = id => "https://lh3.googleusercontent.com/d/" + encodeURIComponent(id) + "=w800";
+const fotoDrive2 = id => "https://drive.google.com/thumbnail?id=" + encodeURIComponent(id) + "&sz=w800";
+const idDrive = u => { const m = String(u || "").match(/\/d\/([\w-]+)|[?&]id=([\w-]+)/); return m ? (m[1] || m[2]) : ""; };
+/* <img> que si no carga prueba la segunda dirección */
+const imgDrive = (id, attrs) => `<img src="${fotoDrive(id)}" data-alt="${fotoDrive2(id)}" referrerpolicy="no-referrer" ${attrs}
+  onerror="if(this.dataset.alt){this.src=this.dataset.alt;this.dataset.alt=''}">`;
 function renderMuro(){
   if (!MURO.length) { $("wall").innerHTML = `<div class="empty">${cargando ? "Cargando donaciones..." : "Todavía no hay donaciones publicadas. ¡Sé la primera persona!"}</div>`; return; }
   $("wall").innerHTML = MURO.map(m => `<article class="post">
-  <div class="ph" style="${m.foto ? `background-image:url('${fotoDrive(m.foto)}')` : "background:linear-gradient(135deg,#1b6a45,#2e9a5a)"}">${m.foto ? "" : "Sin foto"}</div>
+  ${m.foto ? `<div class="ph ph-foto">${imgDrive(m.foto, 'alt="Foto de la donación" loading="lazy"')}</div>`
+           : `<div class="ph" style="background:linear-gradient(135deg,#1b6a45,#2e9a5a)">Sin foto</div>`}
   <div class="tx"><div class="who">${esc(m.who)}</div><div class="to">Donó a ${esc(m.to)}</div><p>${esc(m.txt)}</p></div></article>`).join(""); }
 
 /* ===== 8. VENTANAS Y FORMULARIOS ===== */
@@ -333,10 +341,12 @@ const linkSerParte = () => "https://wa.me/591" + WHATSAPP_NOS_APOYAN + "?text=" 
   encodeURIComponent("Hola, vi la página de Cruz Solidaria y me gustaría ser parte de la causa. ¿Me pueden contar cómo funciona?");
 function renderApoyan(){
   $("sponsors").innerHTML = APOYAN.map(p => {
-    const logo = p.logo ? `<img src="${esc(linkLogo(p.logo))}" alt="" style="width:56px;height:56px;object-fit:contain;border-radius:14px">`
-                        : `<div class="logo-ph">${esc(String(p.nombre).charAt(0))}</div>`;
+    const estiloLogo = 'alt="" style="width:56px;height:56px;object-fit:contain;border-radius:14px"';
+    const logo = !p.logo ? "" : (/drive\.google\.com/.test(p.logo) && idDrive(p.logo)) ? imgDrive(idDrive(p.logo), estiloLogo)
+                        : `<img src="${esc(linkLogo(p.logo))}" ${estiloLogo}>`;
+    const logoFinal = logo || `<div class="logo-ph">${esc(String(p.nombre).charAt(0))}</div>`;
     const nombre = p.link ? `<a href="${esc(linkWeb(p.link))}" target="_blank" rel="noopener"><b>${esc(p.nombre)}</b></a>` : `<b>${esc(p.nombre)}</b>`;
-    return `<div class="slot">${logo}${nombre}<span>${esc(p.aporte || "")}</span></div>`;
+    return `<div class="slot">${logoFinal}${nombre}<span>${esc(p.aporte || "")}</span></div>`;
   }).join("") + `<div class="slot"><div class="logo-ph">+</div><b>Tu empresa puede estar aquí</b>
     <a class="btn sm wa" href="${linkSerParte()}" target="_blank" rel="noopener">Quiero ser parte de la causa</a>
     <span>WhatsApp: +591 ${WHATSAPP_NOS_APOYAN}</span></div>`;
